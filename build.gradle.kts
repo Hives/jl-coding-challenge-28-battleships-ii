@@ -18,6 +18,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
+    testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.20")
 }
 

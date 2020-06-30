@@ -1,7 +1,5 @@
 package battleships
 
-data class Square(val row: Int, val col: Int)
-
 data class Boat(val squares: List<Square>)
 
 class Game(private val boats: List<Boat>) {

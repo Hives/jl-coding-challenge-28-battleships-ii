@@ -10,7 +10,8 @@ internal class GameTest {
     @Test
     fun `assessing shot with no boats is a miss`() {
         val game = Game(emptyList())
-        val results = game.assessShots(listOf(Square(0, 0)))
+        val shots = Squares(listOf(Square(0, 0)))
+        val results = game.assessShots(shots)
         assertThat(results).containsExactly(MISS)
     }
 
@@ -18,7 +19,8 @@ internal class GameTest {
     fun `gives correct response for one shot which is a hit`() {
         val boat = Boat(listOf(Square(2, 7), Square(3, 7)))
         val game = Game(listOf(boat))
-        val results = game.assessShots(listOf(Square(2, 7)))
+        val shots = Squares(listOf(Square(2, 7)))
+        val results = game.assessShots(shots)
         assertThat(results).containsExactly(HIT)
     }
 
@@ -26,7 +28,8 @@ internal class GameTest {
     fun `gives correct response for one shot which is a hit and one which is a miss`() {
         val boat = Boat(listOf(Square(2, 7), Square(3, 7)))
         val game = Game(listOf(boat))
-        val results = game.assessShots(listOf(Square(2, 7), Square(2, 8)))
+        val shots = Squares(listOf(Square(2, 7), Square(2, 8)))
+        val results = game.assessShots(shots)
         assertThat(results).containsExactly(HIT, MISS)
     }
 }

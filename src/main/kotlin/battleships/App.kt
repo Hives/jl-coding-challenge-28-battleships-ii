@@ -13,7 +13,13 @@ fun Application.main() {
     install(DefaultHeaders)
     install(Routing) {
         get("/") {
-            call.respondText("Hello", Html)
+            val game = Game(listOf(Boat(listOf(Square(1, 1)))))
+            call.request.queryParameters["shots"]
+                ?.let { shots ->
+                    val result = game.assessShots(Squares.from(shots))
+                    call.respondText("Hello ${result.map { it.char }}", Html)
+                }
+                ?: call.respondText("Sadface :(", Html)
         }
     }
 }

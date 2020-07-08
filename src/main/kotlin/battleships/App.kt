@@ -13,7 +13,11 @@ fun Application.main() {
     install(DefaultHeaders)
     install(Routing) {
         get("/") {
-            val game = Game(listOf(Boat(listOf(Square(1, 1)))))
+            val game = Game(
+                listOf(
+                    Squares.from("A1")
+                )
+            )
             call.request.queryParameters["shots"]
                 ?.let { shots ->
                     val result = game.assessShots(Squares.from(shots))

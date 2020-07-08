@@ -1,12 +1,17 @@
 package battleships
 
-data class Boat(val squares: List<Square>)
-
-class Game(private val boats: List<Boat>) {
-    fun assessShots(shots: Squares): List<Result> = shots.squares.map {
-        if (boatSquares.contains(it)) Result.HIT
-        else Result.MISS
+class Game(private val boats: List<Squares>) {
+    fun assessShots(shots: Squares) = shots.squares.map { shot ->
+        boats.find { boat ->
+            boat.squares.contains(shot)
+        }?.let { boat ->
+            if (boat.isSunkBy(shots)) Result.SUNK
+            else Result.HIT
+        } ?: Result.MISS
     }
+
+    private fun Squares.isSunkBy(shots: Squares) =
+        this.squares.all { shots.squares.contains(it) }
 
     private val boatSquares: List<Square>
         get() = boats.flatMap {

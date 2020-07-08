@@ -18,6 +18,7 @@ fun Application.main() {
                     Squares.from("A1")
                 )
             )
+
             call.request.queryParameters["shots"]
                 ?.let { shots ->
                     val result = game.assessShots(Squares.from(shots))

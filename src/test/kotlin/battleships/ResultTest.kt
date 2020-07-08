@@ -2,7 +2,9 @@ package battleships
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import battleships.Result.*
+import battleships.Result.HIT
+import battleships.Result.MISS
+import battleships.Result.SUNK
 import org.junit.jupiter.api.Test
 
 internal class ResultTest {

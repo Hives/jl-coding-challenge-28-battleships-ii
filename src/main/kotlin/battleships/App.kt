@@ -3,28 +3,32 @@ package battleships
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
-import io.ktor.http.ContentType.Text.Html
-import io.ktor.response.respondText
-import io.ktor.routing.Routing
+import io.ktor.gson.gson
+import io.ktor.response.respond
 import io.ktor.routing.get
+import io.ktor.routing.routing
+
+val game = Game(listOf(Squares.from("A1")))
 
 fun Application.main() {
     install(DefaultHeaders)
-    install(Routing) {
-        get("/") {
-            val game = Game(
-                listOf(
-                    Squares.from("A1")
-                )
-            )
+    battleships(game)
+}
 
-            call.request.queryParameters["shots"]
-                ?.let { shots ->
-                    val result = game.assessShots(Squares.from(shots))
-                    call.respondText("Hello ${result.map { it.char }}", Html)
+fun Application.battleships(game: Game) {
+    install(ContentNegotiation) { gson {} }
+    routing {
+        get("/") {
+            (call.request.queryParameters["shots"] ?: "")
+                .let { shots ->
+                    call.respond(
+                        ResultsModel.from(
+                            game.assessShots(Squares.from(shots))
+                        )
+                    )
                 }
-                ?: call.respondText("Sadface :(", Html)
         }
     }
 }

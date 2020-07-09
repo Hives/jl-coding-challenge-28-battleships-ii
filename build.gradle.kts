@@ -1,5 +1,8 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA
+
 plugins {
     kotlin("jvm") version "1.3.72"
+    id("com.adarshr.test-logger") version "2.0.0"
     application
 }
 
@@ -34,5 +37,14 @@ tasks {
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
+    }
+    withType<Test> {
+        useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+        testlogger {
+            theme = MOCHA
+        }
     }
 }

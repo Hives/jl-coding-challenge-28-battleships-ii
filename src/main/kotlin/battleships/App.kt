@@ -23,14 +23,15 @@ fun Application.battleships(game: Game) {
     install(ContentNegotiation) { gson {} }
     routing {
         get("/") {
-            (call.request.queryParameters["shots"] ?: "")
-                .let { shots ->
-                    call.respond(
-                        ResultsModel.from(
-                            game.assessShots(Squares.from(shots))
+            with(call) {
+                respond(
+                    ResultsModel.from(
+                        game.assessShots(
+                            Squares.from(request.queryParameters["shots"] ?: "")
                         )
                     )
-                }
+                )
+            }
         }
     }
 }

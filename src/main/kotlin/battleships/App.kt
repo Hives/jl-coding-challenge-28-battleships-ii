@@ -24,13 +24,10 @@ fun Application.battleships(game: Game) {
     routing {
         get("/") {
             with(call) {
-                respond(
-                    ResultsModel.from(
-                        game.assessShots(
-                            Squares.from(request.queryParameters["shots"] ?: "")
-                        )
-                    )
-                )
+                Squares.from(request.queryParameters["shots"] ?: "")
+                    .let { shots -> game.assessShots(shots) }
+                    .let { results -> ResultsModel.from(results) }
+                    .let { resultsModel -> respond(resultsModel) }
             }
         }
     }
